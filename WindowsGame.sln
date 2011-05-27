@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsGame", "WindowsGame\WindowsGame\WindowsGame.csproj", "{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsGameContent", "WindowsGame\WindowsGameContent\WindowsGameContent.contentproj", "{70A1B5F0-EEC3-4918-94CB-31E29AF6DA6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows Phone Copy of WindowsGame", "WindowsGame\WindowsGame\Windows Phone Copy of WindowsGame.csproj", "{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Windows Phone = Debug|Windows Phone
+		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Windows Phone = Release|Windows Phone
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Debug|Windows Phone.Build.0 = Debug|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Debug|x86.ActiveCfg = Debug|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Debug|x86.Build.0 = Debug|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Release|Mixed Platforms.Build.0 = Release|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Release|Windows Phone.ActiveCfg = Release|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Release|Windows Phone.Build.0 = Release|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Release|x86.ActiveCfg = Release|x86
+		{5B30F620-CBFC-4062-A0BA-B9E6CD18ABB6}.Release|x86.Build.0 = Release|x86
+		{70A1B5F0-EEC3-4918-94CB-31E29AF6DA6B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{70A1B5F0-EEC3-4918-94CB-31E29AF6DA6B}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{70A1B5F0-EEC3-4918-94CB-31E29AF6DA6B}.Debug|x86.ActiveCfg = Debug|x86
+		{70A1B5F0-EEC3-4918-94CB-31E29AF6DA6B}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{70A1B5F0-EEC3-4918-94CB-31E29AF6DA6B}.Release|Windows Phone.ActiveCfg = Release|x86
+		{70A1B5F0-EEC3-4918-94CB-31E29AF6DA6B}.Release|x86.ActiveCfg = Release|x86
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Debug|Mixed Platforms.ActiveCfg = Debug|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Debug|Mixed Platforms.Build.0 = Debug|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Debug|Mixed Platforms.Deploy.0 = Debug|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Debug|x86.ActiveCfg = Debug|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Release|Mixed Platforms.ActiveCfg = Release|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Release|Mixed Platforms.Build.0 = Release|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Release|Mixed Platforms.Deploy.0 = Release|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{FA4FAFED-8B5A-4708-86C7-ADA1BCD8763B}.Release|x86.ActiveCfg = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

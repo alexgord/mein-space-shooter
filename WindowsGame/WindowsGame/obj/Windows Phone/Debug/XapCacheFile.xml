@@ -1,0 +1,14 @@
+﻿<xapCache source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\bin\Windows Phone\Debug\WindowsGame.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="26/05/2011 9:07:44 PM">
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\Background.png" archivePath="Background.png" lastWriteTime="26/05/2011 8:54:35 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\GameThumbnail.png" archivePath="GameThumbnail.png" lastWriteTime="26/05/2011 8:54:36 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\bin\Windows Phone\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="26/05/2011 9:07:43 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\obj\Windows Phone\Debug\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="26/05/2011 9:07:43 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\bin\Windows Phone\Debug\WindowsGame.dll" archivePath="WindowsGame.dll" lastWriteTime="26/05/2011 9:07:41 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Ship.xnb" archivePath="Content\Ship.xnb" lastWriteTime="26/05/2011 9:05:21 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Bullet.xnb" archivePath="Content\Bullet.xnb" lastWriteTime="26/05/2011 9:05:22 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Enemy.xnb" archivePath="Content\Enemy.xnb" lastWriteTime="26/05/2011 9:05:22 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Background.xnb" archivePath="Content\Background.xnb" lastWriteTime="26/05/2011 9:05:22 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\EnemyBullet.xnb" archivePath="Content\EnemyBullet.xnb" lastWriteTime="26/05/2011 9:05:22 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\standardAsteroid.xnb" archivePath="Content\standardAsteroid.xnb" lastWriteTime="26/05/2011 9:05:22 PM" />
+  <file source="C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\GameFont.xnb" archivePath="Content\GameFont.xnb" lastWriteTime="26/05/2011 9:05:23 PM" />
+</xapCache>
