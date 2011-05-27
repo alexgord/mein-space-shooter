@@ -24,6 +24,8 @@ namespace WindowsGame
 
         #endregion
 
+        #region Fields
+
         public GraphicsDeviceManager Graphics
         {
             get;
@@ -51,11 +53,18 @@ namespace WindowsGame
         KeyboardState previousKeyboardState = Keyboard.GetState();
         ship theShip;
         private int lives;
+
+        #endregion
+
+        #region Constructor
+
         public Game1()
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
+
+        #endregion
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
