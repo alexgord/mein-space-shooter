@@ -16,20 +16,26 @@ namespace WindowsGame
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        public GraphicsDeviceManager graphics
-        {
-            get;
-            private set;
-        }
-        public SpriteBatch spriteBatch
+        #region Constants
+
+        //const int MAX_BULLETS = 10;
+        const int MaxEnemies = 3;
+        const int MaxStandardAsteroids = 5;
+
+        #endregion
+
+        public GraphicsDeviceManager Graphics
         {
             get;
             private set;
         }
 
-        //const int MAX_BULLETS = 10;
-        const int MAX_ENEMIES = 3;
-        const int MAX_STANDARD_ASTEROIDS = 5;
+        public SpriteBatch SpriteBatch
+        {
+            get;
+            private set;
+        }
+
         Texture2D backgroundTexture;
         //GameObject ship;
         //GameObject[] bullets;
@@ -47,7 +53,7 @@ namespace WindowsGame
         private int lives;
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -60,8 +66,8 @@ namespace WindowsGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            viewportRect = new Rectangle(0, 0, graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height);
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            viewportRect = new Rectangle(0, 0, Graphics.GraphicsDevice.Viewport.Width, Graphics.GraphicsDevice.Viewport.Height);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
             score = 0;
             lives = 3;
             base.Initialize();
@@ -76,15 +82,15 @@ namespace WindowsGame
             // Create a new SpriteBatch, which can be used to draw textures.
             //spriteBatch = new SpriteBatch(GraphicsDevice);
             theShip = new ship(this, Content, viewportRect, Content.Load<Texture2D>("Ship"));
-            enemies = new Enemy[MAX_ENEMIES];
-            for (int i = 0; i < MAX_ENEMIES; i++)
+            enemies = new Enemy[MaxEnemies];
+            for (int i = 0; i < MaxEnemies; i++)
             {
                 enemies[i] = new Enemy(this, Content, viewportRect, Content.Load<Texture2D>("Enemy"));
                 Components.Add(enemies[i]);
             }
             
-            standardAsteroids = new StandardAsteroid[MAX_STANDARD_ASTEROIDS];
-            for (int i = 0; i < MAX_STANDARD_ASTEROIDS; i++)
+            standardAsteroids = new StandardAsteroid[MaxStandardAsteroids];
+            for (int i = 0; i < MaxStandardAsteroids; i++)
             {
                 standardAsteroids[i] = new StandardAsteroid(this, Content, viewportRect, Content.Load<Texture2D>("StandardAsteroid"));
                 standardAsteroids[i].position.X = random.Next(viewportRect.Right);
@@ -146,9 +152,9 @@ namespace WindowsGame
             //}
 
             //Make sure the enemies never overlap
-            for (int i = 0; i < MAX_ENEMIES; i++)
+            for (int i = 0; i < MaxEnemies; i++)
             {
-                for (int j = 0; j < MAX_ENEMIES; j++)
+                for (int j = 0; j < MaxEnemies; j++)
                 {
                     if (i != j)
                     {
@@ -314,19 +320,19 @@ namespace WindowsGame
             GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            SpriteBatch.Begin();
 
-            spriteBatch.Draw(backgroundTexture, viewportRect, Color.White);
-            spriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Health: " + theShip.health, Vector2.Zero, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-            spriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Score: " + score, new Vector2(180, 0), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
-            spriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Lives: ", new Vector2(320, 0), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
+            SpriteBatch.Draw(backgroundTexture, viewportRect, Color.White);
+            SpriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Health: " + theShip.health, Vector2.Zero, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            SpriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Score: " + score, new Vector2(180, 0), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
+            SpriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Lives: ", new Vector2(320, 0), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
             for (int i = 0; i < lives; i++)
             {
                 Rectangle lifeRectangle = new Rectangle(400 + i * 30, 0, 30, 30);
-                spriteBatch.Draw(Content.Load<Texture2D>("Ship"),lifeRectangle, Color.White);
+                SpriteBatch.Draw(Content.Load<Texture2D>("Ship"),lifeRectangle, Color.White);
             }
 
-            spriteBatch.End();
+            SpriteBatch.End();
             base.Draw(gameTime);
         }
 

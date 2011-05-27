@@ -64,7 +64,7 @@ namespace WindowsGame
             alive = false;
             content = _content;
             viewPort = _viewPort;            
-            spritebatch = game.spriteBatch;
+            spritebatch = game.SpriteBatch;
             spriteTextureData =
               new Color[sprite.Width * sprite.Height];
             sprite.GetData(spriteTextureData);
