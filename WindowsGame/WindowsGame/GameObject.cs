@@ -18,7 +18,19 @@ namespace WindowsGame
     {
         public Texture2D sprite;
         public Vector2 position;
-        public float rotation;
+        float rotation;
+
+        public float Rotation
+        {
+            get { return rotation; }
+            set
+            {
+                rotation = value;
+
+                if (rotation >= (float)Math.PI * 2f || rotation <= (float)Math.PI * -2f)
+                    rotation = 0f;
+            }
+        }
         public Vector2 center;
         public Vector2 velocity;
         public bool alive;
@@ -57,7 +69,7 @@ namespace WindowsGame
         {
             game = _game;
             sprite = _sprite;
-            rotation = 0.0f;
+            Rotation = 0.0f;
             position = Vector2.Zero;
             center = new Vector2(sprite.Width / 2, sprite.Height / 2);
             velocity = Vector2.Zero;

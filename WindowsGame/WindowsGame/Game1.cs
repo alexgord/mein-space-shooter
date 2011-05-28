@@ -18,7 +18,6 @@ namespace WindowsGame
     {
         #region Constants
 
-        //const int MAX_BULLETS = 10;
         const int MaxEnemies = 3;
         const int MaxStandardAsteroids = 5;
 
@@ -37,9 +36,7 @@ namespace WindowsGame
         }
 
         Texture2D backgroundTexture;
-        //GameObject ship;
-        //GameObject[] bullets;
-        Enemy[] enemies;
+        public Enemy[] enemies;
         public StandardAsteroid[] standardAsteroids;
         Random random = new Random();
         int score;
@@ -50,6 +47,7 @@ namespace WindowsGame
         }
         KeyboardState previousKeyboardState = Keyboard.GetState();
         ship theShip;
+        HealthBar healthBar;
         private int lives;
         public Game1()
         {
@@ -66,6 +64,7 @@ namespace WindowsGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            IsMouseVisible = true;
             viewportRect = new Rectangle(0, 0, Graphics.GraphicsDevice.Viewport.Width, Graphics.GraphicsDevice.Viewport.Height);
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             score = 0;
@@ -81,6 +80,8 @@ namespace WindowsGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             //spriteBatch = new SpriteBatch(GraphicsDevice);
+            healthBar = new HealthBar(this, Content, viewportRect, Content.Load<Texture2D>("HealthBar"));
+            Components.Add(healthBar);
             theShip = new ship(this, Content, viewportRect, Content.Load<Texture2D>("Ship"));
             enemies = new Enemy[MaxEnemies];
             for (int i = 0; i < MaxEnemies; i++)
@@ -192,16 +193,11 @@ namespace WindowsGame
                 {
                     if (bullet.alive)
                     {
-                        //Rectangle bulletRect = new Rectangle(
-                        //     (int)bullet.position.X,
-                        //     (int)bullet.position.Y,
-                        //     bullet.sprite.Width,
-                        //     bullet.sprite.Height);
-                        //if (bulletRect.Intersects(shipRect))
                         if ( checkCollision(bullet, theShip) )
                         {
                             bullet.alive = false;
                             theShip.health--;
+                            healthBar.health--;
                         }
                     }
                 }
@@ -213,7 +209,7 @@ namespace WindowsGame
                 theShip.health = 100;
             }
 
-            //Check to see if you've shot any bullets
+            //Check to see if you've shot any asteroids
             foreach (StandardAsteroid sa in standardAsteroids)
             {
                 foreach (Bullet bullet in theShip.bullets)
@@ -230,49 +226,27 @@ namespace WindowsGame
             }
 
             //Check if any asteroids have hit each other
-            foreach (StandardAsteroid sa in standardAsteroids)
-            {
-                foreach (StandardAsteroid sa2 in standardAsteroids)
-                {
-                    if (!sa.Equals(sa2))
-                    {
-                        if (checkCollision(sa, sa2))
-                        {
-                            //make them drift apart
-                            //First deal with their velocities
-                            sa2.velocity = sa2.velocity + sa.velocity;
-                            sa.velocity = sa.velocity * -1;
-                            //Then deal with making them rotate accordingly
-                            sa.rotationVelocity += sa2.velocity.X * 0.01f + sa2.velocity.Y * 0.01f;
-                            //if (sa.position.Y > sa2.position.Y && sa.position.X < sa2.position.X)
-                            //{
-                                
-                            //}
-                            //else
-                            //{
-                            //    if (sa.position.Y > sa2.position.Y && sa.position.X > sa2.position.X)
-                            //    {
-                            //    }
-                            //    else
-                            //    {
-                            //        if (sa.position.Y < sa2.position.Y && sa.position.X > sa2.position.X)
-                            //        {
-                            //        }
-                            //        else
-                            //        {
-                            //            if (sa.position.Y < sa2.position.Y && sa.position.X < sa2.position.X)
-                            //            {
 
-                            //            }
-                            //        }
-                            //    }
-                            //}
-                            //sa.alive = false;
-                            //sa2.alive = false;
+                foreach (StandardAsteroid sa in standardAsteroids)
+                {
+                    foreach (StandardAsteroid sa2 in standardAsteroids)
+                    {
+                        if (!sa.Equals(sa2))
+                        {
+                            if (checkCollision(sa, sa2))
+                            {
+                                //make them drift apart
+                                //First deal with their velocities
+                                sa2.velocity = sa2.velocity - sa.velocity * 0.5f;
+                                sa.velocity = sa.velocity * -1;
+                                //Then deal with making them rotate accordingly
+                                sa.rotationVelocity += sa2.velocity.X * 0.01f + sa2.velocity.Y * 0.01f;
+                                sa.health--;
+                                continue;
+                            }
                         }
                     }
                 }
-            }
             base.Update(gameTime);
         }
 
@@ -281,7 +255,7 @@ namespace WindowsGame
                     o1.spriteTransform =
                     Matrix.CreateTranslation(new Vector3(-o1.center, 0.0f)) *
                         // Matrix.CreateScale(block.Scale) *  would go here
-                    Matrix.CreateRotationZ(o1.rotation) *
+                    Matrix.CreateRotationZ(o1.Rotation) *
                     Matrix.CreateTranslation(new Vector3(o1.position, 0.0f));
                     o1.spriteRectangle = CalculateBoundingRectangle(
                         new Rectangle(0, 0, o1.sprite.Width, o1.sprite.Height),
@@ -290,7 +264,7 @@ namespace WindowsGame
                     o2.spriteTransform =
                     Matrix.CreateTranslation(new Vector3(-o2.center, 0.0f)) *
                             // Matrix.CreateScale(block.Scale) *  would go here
-                    Matrix.CreateRotationZ(o2.rotation) *
+                    Matrix.CreateRotationZ(o2.Rotation) *
                     Matrix.CreateTranslation(new Vector3(o2.position, 0.0f));
                     o2.spriteRectangle = CalculateBoundingRectangle(
                         new Rectangle(0, 0, o2.sprite.Width, o2.sprite.Height),

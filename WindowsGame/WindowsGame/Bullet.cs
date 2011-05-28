@@ -9,8 +9,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-//using Microsoft.Xna.Framework.Net;
-//using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.Net;
+using Microsoft.Xna.Framework.Storage;
 
 namespace WindowsGame
 {
@@ -35,7 +35,7 @@ namespace WindowsGame
             spritebatch.Begin();
             if (alive)
             {
-                game.SpriteBatch.Draw(sprite, position, null, Color.White, rotation, center, 1.0f, SpriteEffects.None, 0);
+                game.SpriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
             }
             spritebatch.End();
             base.Draw(gameTime);

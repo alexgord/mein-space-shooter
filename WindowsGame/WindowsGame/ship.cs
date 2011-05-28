@@ -9,8 +9,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-//using Microsoft.Xna.Framework.Net;
-//using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.Net;
+using Microsoft.Xna.Framework.Storage;
 
 namespace WindowsGame
 {
@@ -24,11 +24,13 @@ namespace WindowsGame
         private const float scale = 0.25f;
         const int MAX_BULLETS = 10;
         public int health;
+        GameObject mainGun;
         public Bullet[] bullets
         {
             get;
             set;
         }
+        
         //private Vector2 origin;
         
         KeyboardState previousKeyboardState = Keyboard.GetState();
@@ -36,6 +38,8 @@ namespace WindowsGame
         {
             //this.position = new Vector2(200f,100f);
             //this.velocity = new Vector2(3f, 0f);
+            mainGun = new GameObject(game, content, viewPort, content.Load<Texture2D>("MainGun"));
+            game.Components.Add(mainGun);
             health = 100;
             bullets = new Bullet[MAX_BULLETS];
             for (int count = 0; count < MAX_BULLETS; count++)
@@ -60,7 +64,10 @@ namespace WindowsGame
         {
             //var spritebatch = game.spriteBatch;
             spritebatch.Begin();
-            spritebatch.Draw(sprite, position, null, Color.White, rotation, center, 1.0f, SpriteEffects.None, 0);
+            spritebatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
+            spritebatch.Draw(mainGun.sprite, mainGun.position, null, Color.White, mainGun.Rotation, mainGun.center, 1.0f,SpriteEffects.None, 0);
+            //spritebatch.DrawString(content.Load<SpriteFont>(@"GameFont"), Rotation.ToString(), new Vector2(50, 50), Color.Yellow);
+            //spritebatch.DrawString(content.Load<SpriteFont>(@"GameFont"), mainGun.Rotation.ToString(), new Vector2(100, 100), Color.Green);
             //spritebatch.Draw(shipTexture,
             //                    position,
             //                    null,
@@ -78,18 +85,26 @@ namespace WindowsGame
         public override void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
-
+           
             if (keyboardState.IsKeyDown(Keys.Up))
             {
-                if (game.viewportRect.Contains(new Rectangle((int)position.X + (int)Math.Sin(rotation),
-                    (int)position.Y + (int)Math.Cos(rotation) * -1, 0, 0)))
+                if (game.viewportRect.Contains(new Rectangle((int)position.X + (int)Math.Sin(Rotation),
+                    (int)position.Y + (int)Math.Cos(Rotation) * -1, 0, 0)))
                 {
-                    velocity = new Vector2((float)Math.Sin(rotation),
-                                        (float)Math.Cos(rotation) * -1) * 5.0f;
-                    position += velocity;
+                    velocity += new Vector2((float)Math.Sin(Rotation),
+                                        (float)Math.Cos(Rotation) * -1) * 0.3f;
+
                 }
             }
+            velocity.X = MathHelper.Clamp(velocity.X, -4, 4);
+            velocity.Y = MathHelper.Clamp(velocity.Y, -4, 4);
+            position += velocity;
 
+            if (!game.viewportRect.Contains(new Point((int)position.X, (int)position.Y)))
+            {
+                velocity.Y *= -0.5f;
+                velocity.X *= -0.5f;
+            }
             if (keyboardState.IsKeyDown(Keys.Down))
             {
                 //ship.position.Y += ship.velocity.Y;
@@ -97,12 +112,12 @@ namespace WindowsGame
 
             if (keyboardState.IsKeyDown(Keys.Right))
             {
-                rotation += 0.1f;
+                Rotation += 0.1f;
             }
 
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-                rotation -= 0.1f;
+                Rotation -= 0.1f;
             }
 
             if (keyboardState.IsKeyDown(Keys.Space) && previousKeyboardState.IsKeyUp(Keys.Space))
@@ -113,7 +128,34 @@ namespace WindowsGame
             position.X = MathHelper.Clamp(position.X, 0, game.viewportRect.Right);
             position.Y = MathHelper.Clamp(position.Y, 0, game.viewportRect.Bottom);
             previousKeyboardState = keyboardState;
+            mainGun.position = new Vector2((float)Math.Sin(Rotation),
+                                        (float)Math.Cos(Rotation) * -1) * 20.0f;
+            mainGun.position += position;
+            AimMainGun();
             //base.Update(gameTime);
+        }
+
+        void AimMainGun()
+        {
+            foreach (Enemy enemy in game.enemies)
+            {
+                if (enemy.alive)
+                {
+                    mainGun.Rotation = (float)Math.Atan2(mainGun.position.Y - (double)enemy.position.Y, mainGun.position.X - (double)enemy.position.X);
+                    //mainGun.Rotation = (float)Math.Atan2(mainGun.position.Y - (double)Mouse.GetState().Y, mainGun.position.X - (double)Mouse.GetState().X);
+                    mainGun.Rotation -= (float)Math.PI / 2;
+                    //if ((rotation - mainGun.rotation) / (180 / Math.PI) < - 10 / (180 / Math.PI) || (rotation - mainGun.rotation) / (180 / Math.PI) > 10 / (180 / Math.PI))
+                    if (!((mainGun.Rotation - Rotation) > -0.3 && (mainGun.Rotation - Rotation) < 0.3))
+                    {
+                        mainGun.Rotation = Rotation;
+                    }
+                   else
+                   {
+                        break;
+                   }                    
+                }
+
+            }
         }
 
         void FireBullet()
@@ -123,12 +165,12 @@ namespace WindowsGame
                 if (!bullet.alive)
                 {
                     bullet.alive = true;
-                    bullet.position = position + new Vector2((float)Math.Sin(rotation),
-                               (float)Math.Cos(rotation) * -1);
+                    bullet.position = mainGun.position + new Vector2((float)Math.Sin(Rotation),
+                               (float)Math.Cos(Rotation) * -1);
 
-                    bullet.velocity = new Vector2((float)Math.Sin(rotation),
-                               (float)Math.Cos(rotation) * -1) * 10.0f;
-                    bullet.rotation = rotation;
+                    bullet.velocity = new Vector2((float)Math.Sin(mainGun.Rotation),
+                               (float)Math.Cos(mainGun.Rotation) * -1) * 10.0f;
+                    bullet.Rotation = mainGun.Rotation;
                     return;
                 }
             }

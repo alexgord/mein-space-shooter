@@ -9,8 +9,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-//using Microsoft.Xna.Framework.Net;
-//using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.Net;
+using Microsoft.Xna.Framework.Storage;
 
 namespace WindowsGame
 {
@@ -18,10 +18,14 @@ namespace WindowsGame
     {
         Random rand = new Random();
         public float rotationVelocity;
+        public Boolean hasTouched;
+        public int health;
         public StandardAsteroid(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(theGame, _content, viewPort, _sprite)
         {
             alive = true;
+            hasTouched = false;
             rotationVelocity = 0;
+            health = 4;
             position.X = rand.Next(game.viewportRect.Right);
             position.Y = rand.Next(game.viewportRect.Top);
             velocity.X = rand.Next(6) - 3;
@@ -62,10 +66,11 @@ namespace WindowsGame
                 }
             }
             position += velocity;
-            rotation += rotationVelocity;
-            if (!game.viewportRect.Contains(new Point((int)position.X, (int)position.Y)))
+            Rotation += rotationVelocity;
+            if (!game.viewportRect.Contains(new Point((int)position.X, (int)position.Y)) || health <= 0)
             {
                 alive = false;
+                health = 4;
             }
             base.Update(gameTime);
         }
@@ -75,7 +80,7 @@ namespace WindowsGame
             spritebatch.Begin();
             if (alive)
             {
-                game.SpriteBatch.Draw(sprite, position, null, Color.White, rotation, center, 1.0f, SpriteEffects.None, 0);
+                game.SpriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
                 //game.spriteBatch.Draw(content.Load<Texture2D>("Ship"), spriteRectangle, Color.White);
             }
             spritebatch.End();

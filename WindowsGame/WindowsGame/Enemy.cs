@@ -9,12 +9,12 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-//using Microsoft.Xna.Framework.Net;
-//using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.Net;
+using Microsoft.Xna.Framework.Storage;
 
 namespace WindowsGame
 {
-    class Enemy : GameObject
+    public class Enemy : GameObject
     {
         const int MAX_ENEMY_BULLETS = 10;
         public int ENEMY_DELAY = 20;
@@ -77,7 +77,7 @@ namespace WindowsGame
         public override void Draw(GameTime gameTime)
         {
             spritebatch.Begin();
-            spritebatch.Draw(sprite, position, null, Color.White, rotation, center, 1.0f, SpriteEffects.None, 0);
+            spritebatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
             //spritebatch.Draw(content.Load<Texture2D>("Ship"), spriteRectangle, Color.White);
             spritebatch.End();
             base.Draw(gameTime);
@@ -113,9 +113,9 @@ namespace WindowsGame
                     bullet.alive = true;
                     bullet.position = position; //- center;//+ new Vector2((float)Math.Sin(rotation), (float)Math.Cos(rotation));
 
-                    bullet.velocity = new Vector2((float)Math.Sin(rotation),
-                               (float)Math.Cos(rotation)) * 5.0f;
-                    bullet.rotation = rotation;
+                    bullet.velocity = new Vector2((float)Math.Sin(Rotation),
+                               (float)Math.Cos(Rotation)) * 5.0f;
+                    bullet.Rotation = Rotation;
                     return;
                 }
             }
