@@ -34,10 +34,15 @@ namespace WindowsGame
         //private Vector2 origin;
         
         KeyboardState previousKeyboardState = Keyboard.GetState();
+        public Laser laser;
         public ship(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(_game, _content, viewPort, _sprite)
         {
             //this.position = new Vector2(200f,100f);
             //this.velocity = new Vector2(3f, 0f);
+            laser = new Laser(game, content, viewPort, content.Load<Texture2D>("HealthBar"));
+            game.Components.Add(laser);
+            //laser.life = 10;
+            laser.laserColor = Color.Firebrick;
             mainGun = new GameObject(game, content, viewPort, content.Load<Texture2D>("MainGun"));
             game.Components.Add(mainGun);
             health = 100;
@@ -86,7 +91,7 @@ namespace WindowsGame
         {
             KeyboardState keyboardState = Keyboard.GetState();
            
-            if (keyboardState.IsKeyDown(Keys.Up))
+            if (keyboardState.IsKeyDown(Keys.W))
             {
                 if (game.viewportRect.Contains(new Rectangle((int)position.X + (int)Math.Sin(Rotation),
                     (int)position.Y + (int)Math.Cos(Rotation) * -1, 0, 0)))
@@ -110,12 +115,12 @@ namespace WindowsGame
                 //ship.position.Y += ship.velocity.Y;
             }
 
-            if (keyboardState.IsKeyDown(Keys.Right))
+            if (keyboardState.IsKeyDown(Keys.D))
             {
                 Rotation += 0.1f;
             }
 
-            if (keyboardState.IsKeyDown(Keys.Left))
+            if (keyboardState.IsKeyDown(Keys.A))
             {
                 Rotation -= 0.1f;
             }
@@ -125,6 +130,7 @@ namespace WindowsGame
                 FireBullet();
             }
 
+            
             position.X = MathHelper.Clamp(position.X, 0, game.viewportRect.Right);
             position.Y = MathHelper.Clamp(position.Y, 0, game.viewportRect.Bottom);
             previousKeyboardState = keyboardState;
@@ -133,6 +139,31 @@ namespace WindowsGame
             mainGun.position += position;
             AimMainGun();
             //base.Update(gameTime);
+        }
+
+        public void FireLaser()
+        {
+            laser.startPoint = position + new Vector2((float)Math.Sin(Rotation),
+                               (float)Math.Cos(Rotation) * -1) * (sprite.Height / 2);
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                //if (laser.lived < laser.life)
+                //{
+                    laser.alive = true;
+                    //laser.lived++;
+               //}
+                //else
+                //{
+                    //laser.alive = false;
+                    //laser.laserLength = 0;
+                //}
+            }
+            else
+            {
+                laser.alive = false;
+                laser.lived = 0;
+                laser.laserLength = 0;
+            }
         }
 
         void AimMainGun()
@@ -166,8 +197,7 @@ namespace WindowsGame
                 {
                     bullet.alive = true;
                     bullet.position = mainGun.position + new Vector2((float)Math.Sin(Rotation),
-                               (float)Math.Cos(Rotation) * -1);
-
+                               (float)Math.Cos(Rotation) * -1) * 15;
                     bullet.velocity = new Vector2((float)Math.Sin(mainGun.Rotation),
                                (float)Math.Cos(mainGun.Rotation) * -1) * 10.0f;
                     bullet.Rotation = mainGun.Rotation;

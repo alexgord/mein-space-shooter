@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\x86\Debug\Content\Background.xnb</Output>
-      <Time>2011-05-27T19:24:17.0601413-04:00</Time>
+      <Time>2011-05-28T20:52:01.2063621-04:00</Time>
     </Item>
     <Item>
       <Source>EnemyBullet.png</Source>
@@ -81,6 +81,15 @@
       <Options>None</Options>
       <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\x86\Debug\Content\MainGun.xnb</Output>
       <Time>2011-05-27T23:42:27.014116-04:00</Time>
+    </Item>
+    <Item>
+      <Source>pixel.png</Source>
+      <Name>pixel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\x86\Debug\Content\pixel.xnb</Output>
+      <Time>2011-07-05T20:11:15.5872486-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

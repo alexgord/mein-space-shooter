@@ -1,2 +1,3 @@
 C:\Users\Shovon\Desktop\WindowsGame\WindowsGame\WindowsGameContent\obj\Windows Phone\Debug\ResolveAssemblyReference.cache
 C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGameContent\obj\Windows Phone\Debug\ResolveAssemblyReference.cache
+C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGameContent\obj\Windows Phone\Debug\ResolveAssemblyReference.cache

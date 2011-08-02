@@ -4,4 +4,6 @@ Content\Enemy.xnb
 Content\Background.xnb
 Content\EnemyBullet.xnb
 Content\standardAsteroid.xnb
+Content\HealthBar.xnb
+Content\MainGun.xnb
 Content\GameFont.xnb

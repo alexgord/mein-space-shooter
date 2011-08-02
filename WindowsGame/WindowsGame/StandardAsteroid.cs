@@ -25,7 +25,7 @@ namespace WindowsGame
             alive = true;
             hasTouched = false;
             rotationVelocity = 0;
-            health = 4;
+            health = 10;
             position.X = rand.Next(game.viewportRect.Right);
             position.Y = rand.Next(game.viewportRect.Top);
             velocity.X = rand.Next(6) - 3;
@@ -70,7 +70,12 @@ namespace WindowsGame
             if (!game.viewportRect.Contains(new Point((int)position.X, (int)position.Y)) || health <= 0)
             {
                 alive = false;
-                health = 4;
+                health = 10;
+            }
+            if (health <= 0)
+            {
+                alive = false;
+                health = 10;
             }
             base.Update(gameTime);
         }

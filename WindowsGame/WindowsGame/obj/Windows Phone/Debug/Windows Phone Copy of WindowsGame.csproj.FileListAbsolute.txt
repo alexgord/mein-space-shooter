@@ -21,3 +21,7 @@ C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\
 C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\obj\Windows Phone\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\obj\Windows Phone\Debug\WindowsGame.dll
 C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\obj\Windows Phone\Debug\WindowsGame.pdb
+C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\obj\Windows Phone\Debug\ResolveAssemblyReference.cache
+C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\obj\Windows Phone\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\obj\Windows Phone\Debug\WindowsGame.dll
+C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\obj\Windows Phone\Debug\WindowsGame.pdb

@@ -49,6 +49,7 @@ namespace WindowsGame
         ship theShip;
         HealthBar healthBar;
         private int lives;
+        Vector2 currLaserPoint;
         public Game1()
         {
             Graphics = new GraphicsDeviceManager(this);
@@ -247,6 +248,59 @@ namespace WindowsGame
                         }
                     }
                 }
+                
+                //Firing the Ship's laser!
+                if (Mouse.GetState().LeftButton == ButtonState.Pressed) //If Imma Firin' mah lazors!
+                {
+                    
+                    theShip.laser.alive = true;
+                    Boolean hitSomething = false;
+                    theShip.laser.laserLength = 0;
+                    theShip.laser.lived++;
+                    do
+                    {
+                        theShip.laser.startPoint = theShip.position + new Vector2((float)Math.Sin(theShip.Rotation),
+                               (float)Math.Cos(theShip.Rotation) * -1) * (theShip.sprite.Height / 2);
+                        currLaserPoint = theShip.laser.startPoint + new Vector2((float)Math.Sin(theShip.laser.Rotation),
+                                  (float)Math.Cos(theShip.laser.Rotation) * -1) * (theShip.laser.laserLength) * -1;
+                        GameObject pixel = new GameObject(this, Content, viewportRect, Content.Load<Texture2D>("pixel"));
+                        pixel.position = currLaserPoint;
+                        theShip.laser.laserLength++;
+
+                        foreach (StandardAsteroid asteroid in standardAsteroids)
+                        {
+                            if ( checkCollision(pixel, asteroid))
+                            {
+                                asteroid.health--;
+                                hitSomething = true;
+                                break;
+                            }
+                        }
+                        if (hitSomething)
+                        {
+                            break;
+                        } 
+
+                    }
+                    while (viewportRect.Contains((int)currLaserPoint.X, (int)currLaserPoint.Y)) ;
+                    //if (laser.lived < laser.life)
+                    //{
+                    
+                    //laser.lived++;
+                    //}
+                    //else
+                    //{
+                    //laser.alive = false;
+                    //laser.laserLength = 0;
+                    //}
+                }
+                else
+                {
+                    theShip.laser.alive = false;
+                    theShip.laser.lived = 0;
+                    theShip.laser.laserLength = 0;
+                    currLaserPoint = theShip.position;
+                }
             base.Update(gameTime);
         }
 
@@ -305,7 +359,10 @@ namespace WindowsGame
                 Rectangle lifeRectangle = new Rectangle(400 + i * 30, 0, 30, 30);
                 SpriteBatch.Draw(Content.Load<Texture2D>("Ship"),lifeRectangle, Color.White);
             }
-
+            if ( theShip.laser.alive)
+            {
+            SpriteBatch.Draw(theShip.sprite, new Rectangle((int)currLaserPoint.X, (int)currLaserPoint.Y, 3, 3), Color.White);
+                }
             SpriteBatch.End();
             base.Draw(gameTime);
         }

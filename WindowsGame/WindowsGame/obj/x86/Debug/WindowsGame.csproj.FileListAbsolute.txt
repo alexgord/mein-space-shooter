@@ -52,3 +52,4 @@ C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\W
 C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\obj\x86\Debug\WindowsGame.pdb
 C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\x86\Debug\Content\HealthBar.xnb
 C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\x86\Debug\Content\MainGun.xnb
+C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\x86\Debug\Content\pixel.xnb

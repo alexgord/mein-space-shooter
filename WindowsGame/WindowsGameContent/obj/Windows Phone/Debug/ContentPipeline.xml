@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Ship.xnb</Output>
-      <Time>2011-05-27T14:33:00.4585368-04:00</Time>
+      <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Ship.xnb</Output>
+      <Time>2011-05-27T19:24:17.0621414-04:00</Time>
     </Item>
     <Item>
       <Source>Bullet.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Bullet.xnb</Output>
-      <Time>2011-05-27T14:33:00.4375356-04:00</Time>
+      <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Bullet.xnb</Output>
+      <Time>2011-05-27T19:24:17.0611413-04:00</Time>
     </Item>
     <Item>
       <Source>Enemy.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Enemy.xnb</Output>
-      <Time>2011-05-27T14:33:00.4385357-04:00</Time>
+      <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Enemy.xnb</Output>
+      <Time>2011-05-27T19:24:17.0611413-04:00</Time>
     </Item>
     <Item>
       <Source>Background.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Background.xnb</Output>
-      <Time>2011-05-27T14:33:00.4375356-04:00</Time>
+      <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\Background.xnb</Output>
+      <Time>2011-05-28T20:52:01.2063621-04:00</Time>
     </Item>
     <Item>
       <Source>EnemyBullet.png</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\EnemyBullet.xnb</Output>
-      <Time>2011-05-27T14:33:00.4585368-04:00</Time>
+      <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\EnemyBullet.xnb</Output>
+      <Time>2011-05-27T19:24:17.0621414-04:00</Time>
     </Item>
     <Item>
       <Source>standardAsteroid.png</Source>
@@ -52,8 +52,26 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\standardAsteroid.xnb</Output>
-      <Time>2011-05-27T14:33:00.4775379-04:00</Time>
+      <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\standardAsteroid.xnb</Output>
+      <Time>2011-05-27T19:24:17.0691418-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HealthBar.png</Source>
+      <Name>HealthBar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\HealthBar.xnb</Output>
+      <Time>2011-05-27T21:52:31.6298816-04:00</Time>
+    </Item>
+    <Item>
+      <Source>MainGun.png</Source>
+      <Name>MainGun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\MainGun.xnb</Output>
+      <Time>2011-05-27T23:42:27.014116-04:00</Time>
     </Item>
     <Item>
       <Source>GameFont.spritefont</Source>
@@ -61,8 +79,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\GameFont.xnb</Output>
-      <Time>2011-05-27T14:33:00.4585368-04:00</Time>
+      <Output>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\GameFont.xnb</Output>
+      <Time>2011-05-27T19:24:17.0621414-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -70,10 +88,10 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGameContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGameContent\obj\Windows Phone\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Alexandre\Documents\Devellopment\spaceshooter\Game-Project-With-Friend\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGameContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGameContent\obj\Windows Phone\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Alexandre\Documents\Devellopment\Games\mein-space-shooter\WindowsGame\WindowsGame\bin\Windows Phone\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
