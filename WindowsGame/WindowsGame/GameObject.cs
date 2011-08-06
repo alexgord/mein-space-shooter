@@ -73,7 +73,7 @@ namespace WindowsGame
             position = Vector2.Zero;
             center = new Vector2(sprite.Width / 2, sprite.Height / 2);
             velocity = Vector2.Zero;
-            alive = false;
+            alive = true;
             content = _content;
             viewPort = _viewPort;            
             spritebatch = game.SpriteBatch;
@@ -96,6 +96,15 @@ namespace WindowsGame
         }
         public override void Update(GameTime gameTime)
         {
+            //if (!alive)
+            //{
+             //   alive = true;
+            //}
+
+            if (!game.viewportRect.Contains(new Point((int)position.X, (int)position.Y)))
+            {
+                alive = false;
+            }
             //spriteTransform =
             //        Matrix.CreateTranslation(new Vector3(center, 0.0f)) *
             //    // Matrix.CreateScale(block.Scale) *  would go here
@@ -108,7 +117,19 @@ namespace WindowsGame
             //            new Rectangle((int) position.X, (int) position.Y, sprite.Width, sprite.Height),
             //            spriteTransform);
             //base.Update(gameTime);
-        }      
+            base.Update(gameTime);
+        }
+        public override void Draw(GameTime gameTime)
+        {
+            spritebatch.Begin();
+            if (alive)
+            {
+                game.SpriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
+                //game.spriteBatch.Draw(content.Load<Texture2D>("Ship"), spriteRectangle, Color.White);
+            }
+            spritebatch.End();
+            base.Draw(gameTime);
+        }
         
     }
 }

@@ -23,6 +23,7 @@ namespace WindowsGame
         public int lived;
         public Color laserColor;
         public int laserLength;
+        public Boolean canFire;
         public Laser(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(_game, _content, viewPort, _sprite)
         {
             lived = 0;
@@ -30,6 +31,8 @@ namespace WindowsGame
             laserRect = new Rectangle(0, 0, 1, 100);//(int)destPoint.Length());
             laserLength = 0;
             life = 50;
+            canFire = true;
+            alive = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -40,22 +43,28 @@ namespace WindowsGame
             Rotation += (float)Math.PI / 2;
             //laserRect = new Rectangle((int)startPoint.X, (int)startPoint.Y, 1, (int)(startPoint - destPoint).Length());
             laserRect = new Rectangle((int)startPoint.X, (int)startPoint.Y, 1, laserLength);
-
             if (alive)
             {
                 if (lived < life)
                 {
                     lived++;
                     alive = true;
+                    //canFire = true;
                 }
                 else
                 {
                     alive = false;
+                    //lived = 0;
+                    //canFire = false;
                 }
             }
             else
             {
-                lived = 0;
+                //lived = 0;
+            }
+            if (lived == 0 && Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                //alive = true;
             }
         }
 
@@ -68,7 +77,7 @@ namespace WindowsGame
                 spritebatch.Draw(sprite, laserRect, null, laserColor, Rotation, new Vector2(0, 0), SpriteEffects.None, 0);
             }
             spritebatch.End();
-            base.Draw(gameTime);
+            //base.Draw(gameTime);
         }        
     }
 }

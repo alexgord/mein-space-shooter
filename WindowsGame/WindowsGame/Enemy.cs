@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace WindowsGame
 {
-    public class Enemy : GameObject
+    public class Enemy : DestructibleGameObject
     {
         const int MAX_ENEMY_BULLETS = 10;
         public int ENEMY_DELAY = 20;
@@ -23,16 +23,20 @@ namespace WindowsGame
         public bool hasFired;
         Random random = new Random();
 
-        public Enemy(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(_game, _content, viewPort, _sprite)
+        public Enemy(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(_game, _content, viewPort, _sprite, _health)
         {
             delay = random.Next(1, ENEMY_DELAY);
             bullets = new GameObject[MAX_ENEMY_BULLETS];
             hasFired = false;
             for (int i = 0; i < MAX_ENEMY_BULLETS; i++)
             {
-                bullets[i] = new Bullet(game, game.Content, game.viewportRect, game.Content.Load<Texture2D>("EnemyBullet"));
+                bullets[i] = new Bullet(game, game.Content, game.viewportRect, game.Content.Load<Texture2D>("EnemyBullet"), 1);
                 game.Components.Add(bullets[i]);
             }
+            float randPos = random.Next(0, 800);
+            float randSpeed = random.Next(1, 3);
+            position = new Vector2(randPos, 10);
+            velocity = new Vector2(0, randSpeed);
         }
 
         public override void Update(GameTime gameTime)
@@ -40,11 +44,11 @@ namespace WindowsGame
              if (alive)
              {
                  position += velocity;
-                 if (!game.viewportRect.Contains(new Point((int)position.X,
-                                                      (int)position.Y)))
-                 {
-                     alive = false;
-                 }
+                 //if (!game.viewportRect.Contains(new Point((int)position.X,
+                 //                                     (int)position.Y)))
+                 //{
+                 //    alive = false;
+                 //}
                  if (delay == 0)
                  {
                      if (!hasFired)
@@ -65,8 +69,8 @@ namespace WindowsGame
              {
                  float randPos = random.Next(0, 800);
                  float randSpeed = random.Next(1, 3);
-                 alive = true;
-                 position = new Vector2(randPos, 0);
+                 //alive = true;
+                 position = new Vector2(randPos, 100);
                  velocity = new Vector2(0, randSpeed);
              }
 
@@ -74,14 +78,14 @@ namespace WindowsGame
              base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            spritebatch.Begin();
-            spritebatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
-            //spritebatch.Draw(content.Load<Texture2D>("Ship"), spriteRectangle, Color.White);
-            spritebatch.End();
-            base.Draw(gameTime);
-        }
+        //public override void Draw(GameTime gameTime)
+        //{
+            //spritebatch.Begin();
+            //spritebatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
+            ////spritebatch.Draw(content.Load<Texture2D>("Ship"), spriteRectangle, Color.White);
+            //spritebatch.End();
+            //base.Draw(gameTime);
+        //}
 
         public void UpdateBullets()
         {

@@ -14,9 +14,9 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace WindowsGame
 {
-    class Bullet : GameObject
+    class Bullet : DestructibleGameObject
     {
-        public Bullet(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(theGame, _content, viewPort, _sprite)
+        public Bullet(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(theGame, _content, viewPort, _sprite, _health)
         {
             alive = false;
         }
@@ -30,15 +30,15 @@ namespace WindowsGame
             }
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            spritebatch.Begin();
-            if (alive)
-            {
-                game.SpriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
-            }
-            spritebatch.End();
-            base.Draw(gameTime);
-        }        
+        //public override void Draw(GameTime gameTime)
+        //{
+            //spritebatch.Begin();
+            //if (alive)
+            //{
+            //    game.SpriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
+            //}
+            //spritebatch.End();
+            //base.Draw(gameTime);
+        //}        
     }
 }

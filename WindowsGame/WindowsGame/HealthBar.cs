@@ -26,6 +26,10 @@ namespace WindowsGame
         }
         public override void Update(GameTime gameTime)
         {
+            if (health <= 0)
+            {
+                health = 100;
+            }
             healthRect.Width = health;
         }
 
@@ -47,7 +51,7 @@ namespace WindowsGame
             spritebatch.Draw(sprite, spriteRectangle, Color.White);
             spritebatch.Draw(sprite, healthRect, healthColor);            
             spritebatch.End();
-            base.Draw(gameTime);
+            //base.Draw(gameTime);
         }        
     }
 }

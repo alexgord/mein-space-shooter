@@ -54,6 +54,7 @@ namespace WindowsGame
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            Graphics.PreferMultiSampling = true;
         }
 
         /// <summary>
@@ -83,18 +84,18 @@ namespace WindowsGame
             //spriteBatch = new SpriteBatch(GraphicsDevice);
             healthBar = new HealthBar(this, Content, viewportRect, Content.Load<Texture2D>("HealthBar"));
             Components.Add(healthBar);
-            theShip = new ship(this, Content, viewportRect, Content.Load<Texture2D>("Ship"));
+            theShip = new ship(this, Content, viewportRect, Content.Load<Texture2D>("Ship"), 100);
             enemies = new Enemy[MaxEnemies];
             for (int i = 0; i < MaxEnemies; i++)
             {
-                enemies[i] = new Enemy(this, Content, viewportRect, Content.Load<Texture2D>("Enemy"));
+                enemies[i] = new Enemy(this, Content, viewportRect, Content.Load<Texture2D>("Enemy"), 3);
                 Components.Add(enemies[i]);
             }
             
             standardAsteroids = new StandardAsteroid[MaxStandardAsteroids];
             for (int i = 0; i < MaxStandardAsteroids; i++)
             {
-                standardAsteroids[i] = new StandardAsteroid(this, Content, viewportRect, Content.Load<Texture2D>("StandardAsteroid"));
+                standardAsteroids[i] = new StandardAsteroid(this, Content, viewportRect, Content.Load<Texture2D>("StandardAsteroid"), 10);
                 standardAsteroids[i].position.X = random.Next(viewportRect.Right);
                 standardAsteroids[i].position.Y = random.Next(viewportRect.Bottom);
                 Components.Add(standardAsteroids[i]);
@@ -227,80 +228,107 @@ namespace WindowsGame
             }
 
             //Check if any asteroids have hit each other
-
-                foreach (StandardAsteroid sa in standardAsteroids)
+            
+            foreach (StandardAsteroid sa in standardAsteroids)
+            {
+                foreach (StandardAsteroid sa2 in standardAsteroids)
                 {
-                    foreach (StandardAsteroid sa2 in standardAsteroids)
+                    if (!sa.Equals(sa2) && (!sa.hasTouched || !sa2.hasTouched))
                     {
-                        if (!sa.Equals(sa2))
+                        if (checkCollision(sa, sa2) )
                         {
-                            if (checkCollision(sa, sa2))
-                            {
-                                //make them drift apart
-                                //First deal with their velocities
-                                sa2.velocity = sa2.velocity - sa.velocity * 0.5f;
-                                sa.velocity = sa.velocity * -1;
-                                //Then deal with making them rotate accordingly
-                                sa.rotationVelocity += sa2.velocity.X * 0.01f + sa2.velocity.Y * 0.01f;
-                                sa.health--;
-                                continue;
-                            }
+                            //make them drift apart
+                            //First deal with their velocities
+                            Vector2 ov = sa2.velocity;
+                            sa2.velocity = sa2.velocity * -1 +  (sa.velocity/2);//sa2.velocity - sa.velocity * 0.5f;
+                            sa.velocity = sa.velocity * -1 + (ov/2);
+                            sa.hasTouched = true;
+                            sa2.hasTouched = true;
+                            //Then deal with making them rotate accordingly
+                            sa.rotationVelocity += sa2.velocity.X * 0.01f + sa2.velocity.Y * 0.01f;
+                            //sa.health--;
+                            continue;
                         }
                     }
                 }
-                
-                //Firing the Ship's laser!
-                if (Mouse.GetState().LeftButton == ButtonState.Pressed) //If Imma Firin' mah lazors!
+            }
+            foreach (StandardAsteroid sa in standardAsteroids)
+            {
+                sa.hasTouched = false;
+            }
+            foreach (StandardAsteroid sa in standardAsteroids)
+            {
+                foreach (StandardAsteroid sa2 in standardAsteroids)
                 {
-                    
-                    theShip.laser.alive = true;
-                    Boolean hitSomething = false;
-                    theShip.laser.laserLength = 0;
-                    theShip.laser.lived++;
-                    do
+                    if (!sa.Equals(sa2))
                     {
-                        theShip.laser.startPoint = theShip.position + new Vector2((float)Math.Sin(theShip.Rotation),
-                               (float)Math.Cos(theShip.Rotation) * -1) * (theShip.sprite.Height / 2);
-                        currLaserPoint = theShip.laser.startPoint + new Vector2((float)Math.Sin(theShip.laser.Rotation),
-                                  (float)Math.Cos(theShip.laser.Rotation) * -1) * (theShip.laser.laserLength) * -1;
-                        GameObject pixel = new GameObject(this, Content, viewportRect, Content.Load<Texture2D>("pixel"));
-                        pixel.position = currLaserPoint;
-                        theShip.laser.laserLength++;
-
-                        foreach (StandardAsteroid asteroid in standardAsteroids)
+                        if (checkCollision(sa, sa2))
                         {
-                            if ( checkCollision(pixel, asteroid))
-                            {
-                                asteroid.health--;
-                                hitSomething = true;
-                                break;
-                            }
+                            sa.hasTouched = true;
                         }
-                        if (hitSomething)
+                        else
                         {
+                            //sa.hasTouched = false;
+                        }
+                    }
+                }
+            }    
+            //Firing the Ship's laser!
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && theShip.laser.lived < theShip.laser.life) //If Imma Firin' mah lazors!
+            {
+                    
+                Boolean hitSomething = false;
+                theShip.laser.laserLength = 0;
+                theShip.laser.alive = true;
+                do
+                {
+                    theShip.laser.startPoint = theShip.position + new Vector2((float)Math.Sin(theShip.Rotation),
+                            (float)Math.Cos(theShip.Rotation) * -1) * (theShip.sprite.Height / 2);
+                    currLaserPoint = theShip.laser.startPoint + new Vector2((float)Math.Sin(theShip.laser.Rotation),
+                                (float)Math.Cos(theShip.laser.Rotation) * -1) * (theShip.laser.laserLength) * -1;
+                    GameObject pixel = new GameObject(this, Content, viewportRect, Content.Load<Texture2D>("pixel"));
+                    pixel.position = currLaserPoint;
+                    theShip.laser.laserLength++;
+
+                    foreach (StandardAsteroid asteroid in standardAsteroids)
+                    {
+                        if ( checkCollision(pixel, asteroid))
+                        {
+                            asteroid.health--;
+                            hitSomething = true;
                             break;
-                        } 
-
+                        }
                     }
-                    while (viewportRect.Contains((int)currLaserPoint.X, (int)currLaserPoint.Y)) ;
-                    //if (laser.lived < laser.life)
-                    //{
+                    if (hitSomething)
+                    {
+                        break;
+                    } 
+
+                }
+                while (viewportRect.Contains((int)currLaserPoint.X, (int)currLaserPoint.Y)) ;
+
+                //if (laser.lived < laser.life)
+                //{
                     
-                    //laser.lived++;
-                    //}
-                    //else
-                    //{
-                    //laser.alive = false;
-                    //laser.laserLength = 0;
-                    //}
-                }
-                else
+                //laser.lived++;
+                //}
+                //else
+                //{
+                //laser.alive = false;
+                //laser.laserLength = 0;
+                //}
+            }
+            else
+            {
+                theShip.laser.canFire = true;
+                theShip.laser.alive = false;
+                if (Mouse.GetState().LeftButton != ButtonState.Pressed)
                 {
-                    theShip.laser.alive = false;
                     theShip.laser.lived = 0;
-                    theShip.laser.laserLength = 0;
-                    currLaserPoint = theShip.position;
                 }
+                //theShip.laser.laserLength = 0;
+                currLaserPoint = theShip.position;
+            }
             base.Update(gameTime);
         }
 

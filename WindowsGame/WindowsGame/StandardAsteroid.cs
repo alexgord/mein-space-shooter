@@ -14,27 +14,21 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace WindowsGame
 {
-    public class StandardAsteroid : GameObject
+    public class StandardAsteroid : DestructibleGameObject
     {
+        const int FullHealth = 10;
         Random rand = new Random();
         public float rotationVelocity;
         public Boolean hasTouched;
-        public int health;
-        public StandardAsteroid(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(theGame, _content, viewPort, _sprite)
+        public StandardAsteroid(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(theGame, _content, viewPort, _sprite, _health)
         {
-            alive = true;
+            //alive = true;
             hasTouched = false;
             rotationVelocity = 0;
-            health = 10;
+            health = FullHealth;
             position.X = rand.Next(game.viewportRect.Right);
             position.Y = rand.Next(game.viewportRect.Top);
-            velocity.X = rand.Next(6) - 3;
-            velocity.Y = rand.Next(6) - 3;
-            while (velocity.X == 0 && velocity.Y == 0)
-            {
-                velocity.X = rand.Next(4) - 2;
-                velocity.Y = rand.Next(4) - 2;
-            }
+            GenerateVelocity();
         }
 
         public override void Update(GameTime gameTime)
@@ -57,39 +51,35 @@ namespace WindowsGame
                     }
 
                 }
-                velocity.X = rand.Next(6) - 3;
-                velocity.Y = rand.Next(6) - 3;
-                while (velocity.X == 0 && velocity.Y == 0)
-                {
-                    velocity.X = rand.Next(6) - 3;
-                    velocity.Y = rand.Next(6) - 3;
-                }
+                GenerateVelocity();
             }
             position += velocity;
             Rotation += rotationVelocity;
-            if (!game.viewportRect.Contains(new Point((int)position.X, (int)position.Y)) || health <= 0)
-            {
-                alive = false;
-                health = 10;
-            }
-            if (health <= 0)
-            {
-                alive = false;
-                health = 10;
-            }
+
             base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
+        //public override void Draw(GameTime gameTime)
+        //{
+            //spritebatch.Begin();
+            //if (alive)
+            //{
+            //    game.SpriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
+            //    //game.spriteBatch.Draw(content.Load<Texture2D>("Ship"), spriteRectangle, Color.White);
+            //}
+            //spritebatch.End();
+            //base.Draw(gameTime);
+        //}
+
+        public void GenerateVelocity()
         {
-            spritebatch.Begin();
-            if (alive)
+            velocity.X = rand.Next(4) - 2;
+            velocity.Y = rand.Next(4) - 2;
+            while (velocity.X == 0 && velocity.Y == 0)
             {
-                game.SpriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
-                //game.spriteBatch.Draw(content.Load<Texture2D>("Ship"), spriteRectangle, Color.White);
+                velocity.X = rand.Next(4) - 2;
+                velocity.Y = rand.Next(4) - 2;
             }
-            spritebatch.End();
-            base.Draw(gameTime);
         }
     }
 }
