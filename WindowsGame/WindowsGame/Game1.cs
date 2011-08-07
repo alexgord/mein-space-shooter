@@ -179,8 +179,8 @@ namespace WindowsGame
                     {
                         if ( checkCollision(bullet, enemy) )
                         {
-                            bullet.alive = false;
-                            enemy.alive = false;
+                            bullet.health--;
+                            enemy.health--;
                             score++;
                             break;
                         }
@@ -198,8 +198,8 @@ namespace WindowsGame
                         if ( checkCollision(bullet, theShip) )
                         {
                             bullet.alive = false;
-                            theShip.health--;
-                            healthBar.health--;
+                            theShip.health-= random.Next(1,5);
+                            healthBar.health = theShip.health;
                         }
                     }
                 }
@@ -220,8 +220,8 @@ namespace WindowsGame
                     {
                         if (checkCollision(bullet, sa))
                         {
-                            bullet.alive = false;
-                            sa.alive = false;
+                            bullet.health--;
+                            sa.health-=5;
                         }
                     }
                 }
@@ -286,7 +286,7 @@ namespace WindowsGame
                             (float)Math.Cos(theShip.Rotation) * -1) * (theShip.sprite.Height / 2);
                     currLaserPoint = theShip.laser.startPoint + new Vector2((float)Math.Sin(theShip.laser.Rotation),
                                 (float)Math.Cos(theShip.laser.Rotation) * -1) * (theShip.laser.laserLength) * -1;
-                    GameObject pixel = new GameObject(this, Content, viewportRect, Content.Load<Texture2D>("pixel"));
+                    GameObject pixel = new GameObject(this, Content, viewportRect, Content.Load<Texture2D>("pixel"), false);
                     pixel.position = currLaserPoint;
                     theShip.laser.laserLength++;
 
@@ -295,6 +295,20 @@ namespace WindowsGame
                         if ( checkCollision(pixel, asteroid))
                         {
                             asteroid.health--;
+                            hitSomething = true;
+                            break;
+                        }
+                    }
+                    if (hitSomething)
+                    {
+                        break;
+                    }
+
+                    foreach (Enemy enemy in enemies)
+                    {
+                        if (checkCollision(pixel, enemy))
+                        {
+                            enemy.health--;
                             hitSomething = true;
                             break;
                         }

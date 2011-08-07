@@ -18,7 +18,7 @@ namespace WindowsGame
     {
         public int health;
         Rectangle healthRect;
-        public HealthBar(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(theGame, _content, viewPort, _sprite)
+        public HealthBar(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(theGame, _content, viewPort, _sprite, false)
         {
             healthRect = new Rectangle(0, 30, 100, 10);
             spriteRectangle = healthRect;

@@ -20,9 +20,8 @@ namespace WindowsGame
         Random rand = new Random();
         public float rotationVelocity;
         public Boolean hasTouched;
-        public StandardAsteroid(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(theGame, _content, viewPort, _sprite, _health)
+        public StandardAsteroid(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(theGame, _content, viewPort, _sprite, _health, true, true)
         {
-            //alive = true;
             hasTouched = false;
             rotationVelocity = 0;
             health = FullHealth;
@@ -58,18 +57,6 @@ namespace WindowsGame
 
             base.Update(gameTime);
         }
-
-        //public override void Draw(GameTime gameTime)
-        //{
-            //spritebatch.Begin();
-            //if (alive)
-            //{
-            //    game.SpriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
-            //    //game.spriteBatch.Draw(content.Load<Texture2D>("Ship"), spriteRectangle, Color.White);
-            //}
-            //spritebatch.End();
-            //base.Draw(gameTime);
-        //}
 
         public void GenerateVelocity()
         {

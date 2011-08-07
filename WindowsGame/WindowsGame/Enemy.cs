@@ -23,7 +23,7 @@ namespace WindowsGame
         public bool hasFired;
         Random random = new Random();
 
-        public Enemy(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(_game, _content, viewPort, _sprite, _health)
+        public Enemy(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(_game, _content, viewPort, _sprite, _health, true, true)
         {
             delay = random.Next(1, ENEMY_DELAY);
             bullets = new GameObject[MAX_ENEMY_BULLETS];
@@ -44,11 +44,6 @@ namespace WindowsGame
              if (alive)
              {
                  position += velocity;
-                 //if (!game.viewportRect.Contains(new Point((int)position.X,
-                 //                                     (int)position.Y)))
-                 //{
-                 //    alive = false;
-                 //}
                  if (delay == 0)
                  {
                      if (!hasFired)
@@ -69,43 +64,11 @@ namespace WindowsGame
              {
                  float randPos = random.Next(0, 800);
                  float randSpeed = random.Next(1, 3);
-                 //alive = true;
-                 position = new Vector2(randPos, 100);
+                 position = new Vector2(randPos, 0);
                  velocity = new Vector2(0, randSpeed);
              }
 
-             UpdateBullets();
              base.Update(gameTime);
-        }
-
-        //public override void Draw(GameTime gameTime)
-        //{
-            //spritebatch.Begin();
-            //spritebatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
-            ////spritebatch.Draw(content.Load<Texture2D>("Ship"), spriteRectangle, Color.White);
-            //spritebatch.End();
-            //base.Draw(gameTime);
-        //}
-
-        public void UpdateBullets()
-        {
-            foreach (GameObject bullet in bullets)
-            {
-                if (bullet.alive)
-                {
-                    bullet.position += bullet.velocity;
-                    if (!game.viewportRect.Contains(new Point((int)bullet.position.X, (int)bullet.position.Y)))
-                    {
-                        bullet.alive = false;
-                        continue;
-                    }
-                    Rectangle bulletRect = new Rectangle(
-                         (int)bullet.position.X,
-                         (int)bullet.position.Y,
-                         bullet.sprite.Width,
-                         bullet.sprite.Height);
-                }
-            }
         }
 
         public void FireBullet()

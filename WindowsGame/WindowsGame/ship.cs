@@ -16,11 +16,6 @@ namespace WindowsGame
 {
     class ship : DestructibleGameObject
     {
-       // private Vector2 position;
-       // private Vector2 velocity;
-        //private Game1 game;
-        //private Texture2D shipTexture;
-        //public float rotation;
         private const float scale = 0.25f;
         const int MAX_BULLETS = 10;
         GameObject mainGun;
@@ -30,18 +25,16 @@ namespace WindowsGame
             set;
         }
         
-        //private Vector2 origin;
-        
         KeyboardState previousKeyboardState = Keyboard.GetState();
         public Laser laser;
-        public ship(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(_game, _content, viewPort, _sprite, _health)
+        public ship(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(_game, _content, viewPort, _sprite, _health, false, false)
         {
             //this.position = new Vector2(200f,100f);
             //this.velocity = new Vector2(3f, 0f);
             laser = new Laser(game, content, viewPort, content.Load<Texture2D>("pixel"));
             game.Components.Add(laser);
             laser.laserColor = Color.Firebrick;
-            mainGun = new GameObject(game, content, viewPort, content.Load<Texture2D>("MainGun"));
+            mainGun = new GameObject(game, content, viewPort, content.Load<Texture2D>("MainGun"), false);
             game.Components.Add(mainGun);
             bullets = new Bullet[MAX_BULLETS];
             for (int count = 0; count < MAX_BULLETS; count++)
@@ -50,38 +43,13 @@ namespace WindowsGame
                 game.Components.Add(bullets[count]);
             }
             position = new Vector2(120, 280);
+            
         }
 
         protected override void LoadContent()
         {
-            //sprite = content.Load<Texture2D>("Ship");
-            
-                //origin = new Vector2(shipTexture.Width / 2, shipTexture.Height / 2);
-
             base.LoadContent();
         }
-
-        //public override void Draw(GameTime gameTime)
-        //{
-            //var spritebatch = game.spriteBatch;
-            //spritebatch.Begin();
-            //spritebatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
-            //spritebatch.Draw(mainGun.sprite, mainGun.position, null, Color.White, mainGun.Rotation, mainGun.center, 1.0f,SpriteEffects.None, 0);
-            ////spritebatch.DrawString(content.Load<SpriteFont>(@"GameFont"), Rotation.ToString(), new Vector2(50, 50), Color.Yellow);
-            ////spritebatch.DrawString(content.Load<SpriteFont>(@"GameFont"), mainGun.Rotation.ToString(), new Vector2(100, 100), Color.Green);
-            ////spritebatch.Draw(shipTexture,
-            ////                    position,
-            ////                    null,
-            ////                    Color.White,
-            ////                    0.0f,
-            ////                    origin,
-            ////                    scale,
-            ////                    SpriteEffects.None,
-            ////                    0.0f);
-
-            //spritebatch.End();
-            //base.Draw(gameTime);
-        //}
 
         public override void Update(GameTime gameTime)
         {

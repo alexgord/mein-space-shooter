@@ -18,10 +18,12 @@ namespace WindowsGame
     {
         public int health;
         int fullHealth;
-        public DestructibleGameObject(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(_game, _content, viewPort, _sprite)
+        bool respawn;
+        public DestructibleGameObject(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health, bool _dieOnExit, bool _respawn) : base(_game, _content, viewPort, _sprite, _dieOnExit)
         {
             health = _health;
             fullHealth = health;
+            respawn = _respawn;
         }
         public override void Update(GameTime gameTime)
         {
@@ -32,7 +34,10 @@ namespace WindowsGame
             }
             else
             {
-                alive = true;
+                if (respawn)
+                {
+                    alive = true;
+                }
             }
 
             if (!alive)

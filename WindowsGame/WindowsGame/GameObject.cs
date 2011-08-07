@@ -65,7 +65,8 @@ namespace WindowsGame
             private set;
         }
         private Rectangle viewPort;
-        public GameObject(Game1 _game, ContentManager _content, Rectangle _viewPort, Texture2D _sprite) : base(_game)
+        private bool dieOnExit;
+        public GameObject(Game1 _game, ContentManager _content, Rectangle _viewPort, Texture2D _sprite, bool _dieOnExit) : base(_game)
         {
             game = _game;
             sprite = _sprite;
@@ -80,14 +81,7 @@ namespace WindowsGame
             spriteTextureData =
               new Color[sprite.Width * sprite.Height];
             sprite.GetData(spriteTextureData);
-            //spriteTransform =
-            //        Matrix.CreateTranslation(new Vector3(center, 0.0f)) *
-            //    // Matrix.CreateScale(block.Scale) *  would go here
-            //        Matrix.CreateRotationZ(rotation) *
-            //        Matrix.CreateTranslation(new Vector3(position, 0.0f));
-            //spriteRectangle = Game1.CalculateBoundingRectangle(
-            //            new Rectangle(0,0, sprite.Width, sprite.Height),
-            //            spriteTransform);
+            dieOnExit = _dieOnExit;
         }
 
         protected override void LoadContent()
@@ -96,27 +90,11 @@ namespace WindowsGame
         }
         public override void Update(GameTime gameTime)
         {
-            //if (!alive)
-            //{
-             //   alive = true;
-            //}
 
-            if (!game.viewportRect.Contains(new Point((int)position.X, (int)position.Y)))
+            if (!game.viewportRect.Contains(new Point((int)position.X, (int)position.Y)) && dieOnExit)
             {
                 alive = false;
             }
-            //spriteTransform =
-            //        Matrix.CreateTranslation(new Vector3(center, 0.0f)) *
-            //    // Matrix.CreateScale(block.Scale) *  would go here
-            //        Matrix.CreateRotationZ(rotation) *
-            //        Matrix.CreateTranslation(new Vector3(position, 0.0f));
-            //spriteRectangle = Game1.CalculateBoundingRectangle(
-            //            new Rectangle(0, 0, sprite.Width, sprite.Height),
-            //            spriteTransform);
-            //spriteRectangle = Game1.CalculateBoundingRectangle(
-            //            new Rectangle((int) position.X, (int) position.Y, sprite.Width, sprite.Height),
-            //            spriteTransform);
-            //base.Update(gameTime);
             base.Update(gameTime);
         }
         public override void Draw(GameTime gameTime)
@@ -125,7 +103,6 @@ namespace WindowsGame
             if (alive)
             {
                 game.SpriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
-                //game.spriteBatch.Draw(content.Load<Texture2D>("Ship"), spriteRectangle, Color.White);
             }
             spritebatch.End();
             base.Draw(gameTime);
