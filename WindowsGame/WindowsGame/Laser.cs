@@ -24,7 +24,7 @@ namespace WindowsGame
         public Color laserColor;
         public int laserLength;
         public Boolean canFire;
-        public Laser(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(_game, _content, viewPort, _sprite, false)
+        public Laser(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(_game, _content, viewPort, _sprite, false, 1)
         {
             lived = 0;
             destPoint = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
@@ -35,7 +35,7 @@ namespace WindowsGame
             alive = false;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float elapsedTime)
         {
             Rotation = (float)Math.Atan2((double)startPoint.Y - (double)Mouse.GetState().Y, (double)startPoint.X - (double)Mouse.GetState().X);//((float)Math.Atan2((double)destPoint.Y, (double)destPoint.X)) - (float)Math.PI / 2;
             Rotation += (float)Math.PI / 2;
@@ -54,15 +54,15 @@ namespace WindowsGame
             }
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            spritebatch.Begin();
+            //spriteBatch.Begin();
 
             if (alive)
             {
-                spritebatch.Draw(sprite, laserRect, null, laserColor, Rotation, new Vector2(0, 0), SpriteEffects.None, 0);
+                spritebatch.Draw(sprite, laserRect, null, laserColor, Rotation, new Vector2(0, 0), SpriteEffects.None, layer);
             }
-            spritebatch.End();
+            //spriteBatch.End();
         }        
     }
 }

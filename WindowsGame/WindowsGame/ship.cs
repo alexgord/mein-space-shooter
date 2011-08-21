@@ -27,32 +27,34 @@ namespace WindowsGame
         
         KeyboardState previousKeyboardState = Keyboard.GetState();
         public Laser laser;
-        public ship(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(_game, _content, viewPort, _sprite, _health, false, false)
+        public ship(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(_game, _content, viewPort, _sprite, _health, false, false, 0.2f)
         {
             //this.position = new Vector2(200f,100f);
             //this.velocity = new Vector2(3f, 0f);
             laser = new Laser(game, content, viewPort, content.Load<Texture2D>("pixel"));
-            game.Components.Add(laser);
+            game.objectManager.Add(laser);
             laser.laserColor = Color.Firebrick;
-            mainGun = new GameObject(game, content, viewPort, content.Load<Texture2D>("MainGun"), false);
-            game.Components.Add(mainGun);
+            mainGun = new GameObject(game, content, viewPort, content.Load<Texture2D>("MainGun"), false, 0.3f);
+            game.objectManager.Add(mainGun);
+            //mainGun.layer = 0;
             bullets = new Bullet[MAX_BULLETS];
             for (int count = 0; count < MAX_BULLETS; count++)
             {
                 bullets[count] = new Bullet(game, game.Content, game.viewportRect, game.Content.Load<Texture2D>("Bullet"), 1);
-                game.Components.Add(bullets[count]);
+                game.objectManager.Add(bullets[count]);
             }
             position = new Vector2(120, 280);
-            
+            //layer = 1;
         }
 
-        protected override void LoadContent()
-        {
-            base.LoadContent();
-        }
+        //protected override void LoadContent()
+        //{
+         //   base.LoadContent();
+        //}
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float elapsedTime)
         {
+
             KeyboardState keyboardState = Keyboard.GetState();
            
             if (keyboardState.IsKeyDown(Keys.W))

@@ -23,23 +23,23 @@ namespace WindowsGame
         public bool hasFired;
         Random random = new Random();
 
-        public Enemy(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(_game, _content, viewPort, _sprite, _health, true, true)
+        public Enemy(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(_game, _content, viewPort, _sprite, _health, true, true, 1)
         {
-            delay = random.Next(1, ENEMY_DELAY);
+            delay = game.random.Next(1, ENEMY_DELAY);
             bullets = new GameObject[MAX_ENEMY_BULLETS];
             hasFired = false;
             for (int i = 0; i < MAX_ENEMY_BULLETS; i++)
             {
                 bullets[i] = new Bullet(game, game.Content, game.viewportRect, game.Content.Load<Texture2D>("EnemyBullet"), 1);
-                game.Components.Add(bullets[i]);
+                game.objectManager.Add(bullets[i]);
             }
-            float randPos = random.Next(0, 800);
-            float randSpeed = random.Next(1, 3);
+            float randPos = game.random.Next(0, 800);
+            float randSpeed = game.random.Next(1, 3);
             position = new Vector2(randPos, 10);
             velocity = new Vector2(0, randSpeed);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float elapsedTime)
         {
              if (alive)
              {
@@ -68,7 +68,7 @@ namespace WindowsGame
                  velocity = new Vector2(0, randSpeed);
              }
 
-             base.Update(gameTime);
+             base.Update(elapsedTime);
         }
 
         public void FireBullet()

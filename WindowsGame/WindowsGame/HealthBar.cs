@@ -18,13 +18,13 @@ namespace WindowsGame
     {
         public int health;
         Rectangle healthRect;
-        public HealthBar(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(theGame, _content, viewPort, _sprite, false)
+        public HealthBar(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite) : base(theGame, _content, viewPort, _sprite, false, 0.1f)
         {
             healthRect = new Rectangle(0, 30, 100, 10);
             spriteRectangle = healthRect;
             health = 100;
         }
-        public override void Update(GameTime gameTime)
+        public override void Update(float elapsedTime)
         {
             if (health <= 0)
             {
@@ -33,7 +33,7 @@ namespace WindowsGame
             healthRect.Width = health;
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             Color healthColor = Color.Green;
             if (health < 50)
@@ -47,10 +47,10 @@ namespace WindowsGame
                     healthColor = Color.Firebrick;
                 }
             }
-            spritebatch.Begin();
-            spritebatch.Draw(sprite, spriteRectangle, Color.White);
-            spritebatch.Draw(sprite, healthRect, healthColor);            
-            spritebatch.End();
+            //spriteBatch.Begin();
+            spriteBatch.Draw(sprite, healthRect, null, healthColor, 0, Vector2.Zero, SpriteEffects.None, layer + 0.1f);
+            spriteBatch.Draw(sprite, spriteRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, layer);                         
+            //spriteBatch.End();
             //base.Draw(gameTime);
         }        
     }

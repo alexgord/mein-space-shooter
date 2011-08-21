@@ -14,12 +14,12 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace WindowsGame
 {
-    public class GameObject : DrawableGameComponent
+    public class GameObject //: DrawableGameComponent
     {
         public Texture2D sprite;
         public Vector2 position;
         float rotation;
-
+        public float layer;
         public float Rotation
         {
             get { return rotation; }
@@ -66,8 +66,9 @@ namespace WindowsGame
         }
         private Rectangle viewPort;
         private bool dieOnExit;
-        public GameObject(Game1 _game, ContentManager _content, Rectangle _viewPort, Texture2D _sprite, bool _dieOnExit) : base(_game)
+        public GameObject(Game1 _game, ContentManager _content, Rectangle _viewPort, Texture2D _sprite, bool _dieOnExit, float _layer) //: base(_game)
         {
+            layer = _layer;
             game = _game;
             sprite = _sprite;
             Rotation = 0.0f;
@@ -84,28 +85,28 @@ namespace WindowsGame
             dieOnExit = _dieOnExit;
         }
 
-        protected override void LoadContent()
+        protected /*override*/ void LoadContent()
         {
            
         }
-        public override void Update(GameTime gameTime)
+        public virtual void Update(float elapsedTime)
         {
 
             if (!game.viewportRect.Contains(new Point((int)position.X, (int)position.Y)) && dieOnExit)
             {
                 alive = false;
             }
-            base.Update(gameTime);
+            //base.Update(gameTime);
         }
-        public override void Draw(GameTime gameTime)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spritebatch.Begin();
+            //spriteBatch.Begin();
             if (alive)
             {
-                game.SpriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, 0);
+                spriteBatch.Draw(sprite, position, null, Color.White, Rotation, center, 1.0f, SpriteEffects.None, layer);
             }
-            spritebatch.End();
-            base.Draw(gameTime);
+            //spriteBatch.End();
+            //base.Draw(gameTime);
         }
         
     }

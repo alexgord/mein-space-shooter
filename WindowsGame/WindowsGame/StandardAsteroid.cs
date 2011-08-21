@@ -20,32 +20,32 @@ namespace WindowsGame
         Random rand = new Random();
         public float rotationVelocity;
         public Boolean hasTouched;
-        public StandardAsteroid(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(theGame, _content, viewPort, _sprite, _health, true, true)
+        public StandardAsteroid(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(theGame, _content, viewPort, _sprite, _health, true, true, 1)
         {
             hasTouched = false;
             rotationVelocity = 0;
             health = FullHealth;
-            position.X = rand.Next(game.viewportRect.Right);
-            position.Y = rand.Next(game.viewportRect.Top);
+            position.X = game.random.Next(game.viewportRect.Right);
+            position.Y = game.random.Next(game.viewportRect.Top);
             GenerateVelocity();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float elapsedTime)
         {
             if (!alive)
             {
                 alive = true;
                 rotationVelocity = 0;
-                position.X = rand.Next(game.viewportRect.Right);
-                position.Y = rand.Next(game.viewportRect.Bottom);
+                position.X = game.random.Next(game.viewportRect.Right);
+                position.Y = game.random.Next(game.viewportRect.Bottom);
                 foreach (StandardAsteroid sa in game.standardAsteroids)
                 {
                     if (!sa.Equals(this))
                     {
                         while (game.checkCollision(sa, this))
                         {
-                            this.position.X = rand.Next(game.viewportRect.Right);
-                            this.position.Y = rand.Next(game.viewportRect.Bottom);
+                            this.position.X = game.random.Next(game.viewportRect.Right);
+                            this.position.Y = game.random.Next(game.viewportRect.Bottom);
                         }
                     }
 
@@ -55,17 +55,17 @@ namespace WindowsGame
             position += velocity;
             Rotation += rotationVelocity;
 
-            base.Update(gameTime);
+            base.Update(elapsedTime);
         }
 
         public void GenerateVelocity()
         {
-            velocity.X = rand.Next(4) - 2;
-            velocity.Y = rand.Next(4) - 2;
+            velocity.X = game.random.Next(4) - 2;
+            velocity.Y = game.random.Next(4) - 2;
             while (velocity.X == 0 && velocity.Y == 0)
             {
-                velocity.X = rand.Next(4) - 2;
-                velocity.Y = rand.Next(4) - 2;
+                velocity.X = game.random.Next(4) - 2;
+                velocity.Y = game.random.Next(4) - 2;
             }
         }
     }

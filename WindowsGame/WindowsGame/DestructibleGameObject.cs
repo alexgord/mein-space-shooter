@@ -19,14 +19,17 @@ namespace WindowsGame
         public int health;
         int fullHealth;
         bool respawn;
-        public DestructibleGameObject(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health, bool _dieOnExit, bool _respawn) : base(_game, _content, viewPort, _sprite, _dieOnExit)
+        //public Explosion explosion;
+        public DestructibleGameObject(Game1 _game, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health, bool _dieOnExit, bool _respawn, float _layer) : base(_game, _content, viewPort, _sprite, _dieOnExit, _layer)
         {
             health = _health;
             fullHealth = health;
             respawn = _respawn;
+            //explosion = new Explosion(_game);
         }
-        public override void Update(GameTime gameTime)
+        public override void Update(float elapsedTime)
         {
+            //explosion.UpdateParticles(elapsedTime);
             if (health <= 0)
             {
                 alive = false;
@@ -44,8 +47,14 @@ namespace WindowsGame
             {
                 health = fullHealth;
             }
-            base.Update(gameTime);
+            
+            base.Update(elapsedTime);
         }
-
+        //public override void Draw(SpriteBatch spriteBatch) { }
+        //public override void Draw(SpriteBatch spriteBatch)
+        //{
+        //    explosion.Draw(spriteBatch);
+        //    base.Draw(spriteBatch);
+        //}
     }
 }

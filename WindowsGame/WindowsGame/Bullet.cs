@@ -16,18 +16,22 @@ namespace WindowsGame
 {
     class Bullet : DestructibleGameObject
     {
-        public Bullet(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(theGame, _content, viewPort, _sprite, _health, true, false)
+        public Bullet(Game1 theGame, ContentManager _content, Rectangle viewPort, Texture2D _sprite, int _health) : base(theGame, _content, viewPort, _sprite, _health, true, false, 1)
         {
             alive = false;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float elapsedTime)
         {
             if (alive)
             {
                 position += velocity;
             }
-            base.Update(gameTime);
+            else
+            {
+                
+            }
+            base.Update( elapsedTime);
         }
 
         //public override void Draw(GameTime gameTime)

@@ -23,6 +23,8 @@ namespace WindowsGame
 
         #endregion
 
+        public ObjectManager objectManager;
+        Explosion explosion;
         public GraphicsDeviceManager Graphics
         {
             get;
@@ -38,7 +40,7 @@ namespace WindowsGame
         Texture2D backgroundTexture;
         public Enemy[] enemies;
         public StandardAsteroid[] standardAsteroids;
-        Random random = new Random();
+        public Random random = new Random();
         int score;
         public Rectangle viewportRect
         {
@@ -55,6 +57,10 @@ namespace WindowsGame
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             Graphics.PreferMultiSampling = true;
+            //Graphics = new GraphicsDevice(new GraphicsAdapter, new GraphicsProfile, new PresentationParameters);
+            
+
+
         }
 
         /// <summary>
@@ -71,6 +77,8 @@ namespace WindowsGame
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             score = 0;
             lives = 3;
+            objectManager = new ObjectManager(GraphicsDevice);
+            explosion = new Explosion(this);
             base.Initialize();
         }
 
@@ -82,14 +90,15 @@ namespace WindowsGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             //spriteBatch = new SpriteBatch(GraphicsDevice);
+            objectManager.Load(Content);
             healthBar = new HealthBar(this, Content, viewportRect, Content.Load<Texture2D>("HealthBar"));
-            Components.Add(healthBar);
+            objectManager.Add(healthBar);
             theShip = new ship(this, Content, viewportRect, Content.Load<Texture2D>("Ship"), 100);
             enemies = new Enemy[MaxEnemies];
             for (int i = 0; i < MaxEnemies; i++)
             {
                 enemies[i] = new Enemy(this, Content, viewportRect, Content.Load<Texture2D>("Enemy"), 3);
-                Components.Add(enemies[i]);
+                objectManager.Add(enemies[i]);
             }
             
             standardAsteroids = new StandardAsteroid[MaxStandardAsteroids];
@@ -98,9 +107,9 @@ namespace WindowsGame
                 standardAsteroids[i] = new StandardAsteroid(this, Content, viewportRect, Content.Load<Texture2D>("StandardAsteroid"), 10);
                 standardAsteroids[i].position.X = random.Next(viewportRect.Right);
                 standardAsteroids[i].position.Y = random.Next(viewportRect.Bottom);
-                Components.Add(standardAsteroids[i]);
+                objectManager.Add(standardAsteroids[i]);
             }
-            Components.Add(theShip);
+            objectManager.Add(theShip);
             // TODO: use this.Content to load your game content here
             foreach (StandardAsteroid sa in standardAsteroids)
             {
@@ -154,6 +163,10 @@ namespace WindowsGame
             //    }
             //}
 
+            float elapsedTime = (float)gameTime.TotalGameTime.TotalMilliseconds;
+            explosion.UpdateParticles(elapsedTime);
+            objectManager.Update(elapsedTime);
+            
             //Make sure the enemies never overlap
             for (int i = 0; i < MaxEnemies; i++)
             {
@@ -182,6 +195,7 @@ namespace WindowsGame
                             bullet.health--;
                             enemy.health--;
                             score++;
+                            explosion.AddExplosion(bullet.position, 10, 80.0f, 2000.0f, elapsedTime);
                             break;
                         }
                     }
@@ -200,6 +214,7 @@ namespace WindowsGame
                             bullet.alive = false;
                             theShip.health-= random.Next(1,5);
                             healthBar.health = theShip.health;
+                            explosion.AddExplosion(bullet.position, 10, 80.0f, 2000.0f, elapsedTime);
                         }
                     }
                 }
@@ -222,13 +237,13 @@ namespace WindowsGame
                         {
                             bullet.health--;
                             sa.health-=5;
+                            explosion.AddExplosion(bullet.position, 10, 80.0f, 2000.0f, elapsedTime);
                         }
                     }
                 }
             }
 
-            //Check if any asteroids have hit each other
-            
+            //Check if any asteroids have hit each other            
             foreach (StandardAsteroid sa in standardAsteroids)
             {
                 foreach (StandardAsteroid sa2 in standardAsteroids)
@@ -282,19 +297,25 @@ namespace WindowsGame
                 theShip.laser.alive = true;
                 do
                 {
+                    //update the laser's position
                     theShip.laser.startPoint = theShip.position + new Vector2((float)Math.Sin(theShip.Rotation),
                             (float)Math.Cos(theShip.Rotation) * -1) * (theShip.sprite.Height / 2);
                     currLaserPoint = theShip.laser.startPoint + new Vector2((float)Math.Sin(theShip.laser.Rotation),
                                 (float)Math.Cos(theShip.laser.Rotation) * -1) * (theShip.laser.laserLength) * -1;
-                    GameObject pixel = new GameObject(this, Content, viewportRect, Content.Load<Texture2D>("pixel"), false);
+                    GameObject pixel = new GameObject(this, Content, viewportRect, Content.Load<Texture2D>("pixel"), false, 0.2f);
                     pixel.position = currLaserPoint;
                     theShip.laser.laserLength++;
 
+                    //Check to see if the laser has hit any asteroids
                     foreach (StandardAsteroid asteroid in standardAsteroids)
                     {
                         if ( checkCollision(pixel, asteroid))
                         {
                             asteroid.health--;
+                            if (asteroid.health <= 0)
+                            {
+                                explosion.AddExplosion(asteroid.position, 10, 80.0f, 2000.0f, elapsedTime);
+                            }
                             hitSomething = true;
                             break;
                         }
@@ -304,11 +325,16 @@ namespace WindowsGame
                         break;
                     }
 
+                    //Check to see if the laser has hit any enemies
                     foreach (Enemy enemy in enemies)
                     {
                         if (checkCollision(pixel, enemy))
                         {
                             enemy.health--;
+                            if (enemy.health <= 0)
+                            {
+                                explosion.AddExplosion(enemy.position, 10, 80.0f, 2000.0f, elapsedTime);
+                            }
                             hitSomething = true;
                             break;
                         }
@@ -340,7 +366,7 @@ namespace WindowsGame
                 {
                     theShip.laser.lived = 0;
                 }
-                //theShip.laser.laserLength = 0;
+                theShip.laser.laserLength = 0;
                 currLaserPoint = theShip.position;
             }
             base.Update(gameTime);
@@ -390,21 +416,28 @@ namespace WindowsGame
             GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
-            SpriteBatch.Begin();
-
-            SpriteBatch.Draw(backgroundTexture, viewportRect, Color.White);
-            SpriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Health: " + theShip.health, Vector2.Zero, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-            SpriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Score: " + score, new Vector2(180, 0), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
-            SpriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Lives: ", new Vector2(320, 0), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
+            SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
+            //SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive);
+            objectManager.Draw(SpriteBatch);
+            SpriteBatch.Draw(backgroundTexture, viewportRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+            SpriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Health: " + theShip.health, Vector2.Zero, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+            SpriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Score: " + score, new Vector2(180, 0), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 1);
+            SpriteBatch.DrawString(Content.Load<SpriteFont>(@"GameFont"), "Lives: ", new Vector2(320, 0), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 1);
             for (int i = 0; i < lives; i++)
             {
                 Rectangle lifeRectangle = new Rectangle(400 + i * 30, 0, 30, 30);
-                SpriteBatch.Draw(Content.Load<Texture2D>("Ship"),lifeRectangle, Color.White);
+                SpriteBatch.Draw(Content.Load<Texture2D>("Ship"), lifeRectangle, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1);
             }
-            if ( theShip.laser.alive)
-            {
-            SpriteBatch.Draw(theShip.sprite, new Rectangle((int)currLaserPoint.X, (int)currLaserPoint.Y, 3, 3), Color.White);
-                }
+            //if (theShip.laser.alive)
+           // {
+           //     SpriteBatch.Draw(theShip.sprite, new Rectangle((int)currLaserPoint.X, (int)currLaserPoint.Y, 3, 3), Color.White);
+           // }
+            
+            SpriteBatch.End();
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+
+            explosion.Draw(SpriteBatch);
+
             SpriteBatch.End();
             base.Draw(gameTime);
         }
